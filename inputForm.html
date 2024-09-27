@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Save User Input to File</title>
+</head>
+<body>
+    <h1>Input Form</h1>
+    <form id="inputForm">
+        <label for="userInput">Enter some text:</label><br><br>
+        <textarea id="userInput" name="userInput" rows="4" cols="50"></textarea><br><br>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        document.getElementById('inputForm').addEventListener('submit', async function(e) {
+            e.preventDefault(); // Prevent page reload
+            
+            const inputText = document.getElementById('userInput').value;
+            const response = await fetch('/save', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ input: inputText }),
+            });
+
+            if (response.ok) {
+                alert('Data saved successfully!');
+            } else {
+                alert('Failed to save data.');
+            }
+        });
+    </script>
+</body>
+</html>
